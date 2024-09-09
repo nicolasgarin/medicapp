@@ -1,0 +1,2 @@
+pacient = usuario
+pacientForm = formusuario
