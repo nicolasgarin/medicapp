@@ -21,7 +21,7 @@ export enum FormFieldType {
   SKELETON = "skeleton",
 }
 
-export function FormUsuario() {
+export function FormRegistro() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -84,10 +84,10 @@ export function FormUsuario() {
           placeholder="(+34) 123 456 789"
         />
 
-        <SubmitButton isLoading={isLoading}> Comenzar </SubmitButton>
+        <SubmitButton isLoading={isLoading}> Comenszar </SubmitButton>
       </form>
     </Form>
   );
 }
 
-export default FormUsuario;
+export default FormRegistro;

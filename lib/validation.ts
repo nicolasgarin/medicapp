@@ -12,7 +12,7 @@ export const UserFormValidation = z.object({
     .string()
     .refine(
       (phone) =>
-        /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/.test(phone),
+        /^\+\d{10,15}$/.test(phone),
       "Número de teléfono no válido."
     ),
 });
