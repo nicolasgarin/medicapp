@@ -9,11 +9,22 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Control } from "react-hook-form";
-import { FormFieldType } from "../forms/FormUsuario";
 import Image from "next/image";
 import 'react-phone-number-input/style.css';
 import PhoneInput from "react-phone-number-input";
 import { E164Number } from "libphonenumber-js/core";
+import ReactDatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
+export enum FormFieldType {
+  INPUT = "input",
+  TEXTAREA = "textarea",
+  PHONE_INPUT = "phoneInput",
+  CHECKBOX = "checkbox",
+  DATE_PICKER = "datePicker",
+  SELECT = "select",
+  SKELETON = "skeleton",
+}
 
 interface CustomProps {
   fieldType: FormFieldType;
@@ -31,7 +42,7 @@ interface CustomProps {
 }
 
 const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
-  const { fieldType, iconSrc, iconAlt, placeholder } = props;
+  const { fieldType, iconSrc, iconAlt, placeholder, showTimeSelect, dateFormat } = props;
   switch (fieldType) {
     case FormFieldType.INPUT:
       return (
@@ -72,12 +83,32 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
       );
     case FormFieldType.CHECKBOX:
       return <Input {...field} {...props} />;
-    case FormFieldType.DATE_PICKER:
-      return <Input {...field} {...props} />;
+      case FormFieldType.DATE_PICKER:
+        return (
+          <div className="flex rounded-md border border-dark-500 bg-dark-400">
+            <Image
+              src="/assets/icons/calendar.svg"
+              height={24}
+              width={24}
+              alt="Calendario"
+              className="ml-2"
+            />
+            <FormControl>
+              <ReactDatePicker
+                showTimeSelect={props.showTimeSelect ?? false}
+                selected={field.value}
+                onChange={(date: any) => field.onChange(date)}
+                timeInputLabel="Time:"
+                dateFormat={props.dateFormat ?? "MM/dd/yyyy"}
+                wrapperClassName="date-picker"
+              />
+            </FormControl>
+          </div>
+        );
     case FormFieldType.SELECT:
       return <Input {...field} {...props} />;
-    case FormFieldType.SKELETON:
-      return <Input {...field} {...props} />;
+      case FormFieldType.SKELETON:
+        return props.renderSkeleton ? props.renderSkeleton(field) : null;
     default:
       break;
   }

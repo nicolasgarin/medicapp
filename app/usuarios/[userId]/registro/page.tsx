@@ -1,9 +1,12 @@
 import FormRegistro from "@/components/forms/FormRegistro";
+import { getUser } from "@/lib/actions/user.actions";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-function Registro() {
+const Registro = async ({ params: { userId } }: SearchParamProps) => {
+  const user = await getUser(userId);
+
   return (
     <div className="flex h-screen max-h-screen">
       <section className="remove-scrollbar container my-auto">
@@ -15,7 +18,7 @@ function Registro() {
             height={1000}
             className="mb-12 h-10 w-fit"
           />
-          <FormRegistro />
+          <FormRegistro user={user} />
           <div className="text-14-regular mt-20 flex justify-between">
             <p className="justify-items-end text-dark-600 xl:text-left">
               © 2024 MedicApp
