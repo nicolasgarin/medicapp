@@ -11,8 +11,9 @@ import { UserFormValidation } from "@/lib/validation";
 import { useRouter } from "next/navigation";
 import { createUser } from "@/lib/actions/user.actions";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
-import { GenderOptions } from "@/constants";
+import { GenderOptions, IdentificationTypes } from "@/constants";
 import { Label } from "../ui/label";
+import { SelectItem } from "../ui/select";
 
 export function FormRegistro({ user }: { user: User }) {
   const router = useRouter();
@@ -57,77 +58,152 @@ export function FormRegistro({ user }: { user: User }) {
           <div className="mb-9 space-y-1">
             <h2 className="sub-header">Información personal</h2>
           </div>
-        </section>
 
-        <CustomFormField
-          fieldType={FormFieldType.INPUT}
-          control={form.control}
-          name="name"
-          label="Nombre completo"
-          placeholder="Juan Pérez"
-          iconSrc="/assets/icons/user.svg"
-          iconAlt="Usuario"
-        />
-
-        <div className="flex flex-col gap-6 xl:flex-row">
           <CustomFormField
             fieldType={FormFieldType.INPUT}
             control={form.control}
-            name="email"
-            label="Email"
-            placeholder="juanperez@mail.com"
-            iconSrc="/assets/icons/email.svg"
-            iconAlt="Email"
+            name="name"
+            label="Nombre completo"
+            placeholder="Juan Pérez"
+            iconSrc="/assets/icons/user.svg"
+            iconAlt="Usuario"
           />
+
+          <div className="flex flex-col gap-6 xl:flex-row">
+            <CustomFormField
+              fieldType={FormFieldType.INPUT}
+              control={form.control}
+              name="email"
+              label="Email"
+              placeholder="juanperez@mail.com"
+              iconSrc="/assets/icons/email.svg"
+              iconAlt="Email"
+            />
+
+            <CustomFormField
+              fieldType={FormFieldType.PHONE_INPUT}
+              control={form.control}
+              name="phone"
+              label="Teléfono"
+              placeholder="(+34) 123 456 789"
+            />
+          </div>
+
+          <div className="flex flex-col gap-6 xl:flex-row">
+            <CustomFormField
+              fieldType={FormFieldType.DATE_PICKER}
+              control={form.control}
+              name="fechaNacimiento"
+              label="Fecha de Nacimiento"
+            />
+
+            <CustomFormField
+              fieldType={FormFieldType.SKELETON}
+              control={form.control}
+              name="genero"
+              label="Género"
+              renderSkeleton={(field) => (
+                <FormControl>
+                  <RadioGroup
+                    className="flex h-11 gap-6 xl:justify-between"
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    {GenderOptions.map((option) => (
+                      <div key={option} className="radio-group">
+                        <RadioGroupItem value={option} id={option} />
+                        <Label className="cursor-pointer" htmlFor={option}>
+                          {option}
+                        </Label>
+                      </div>
+                    ))}
+                  </RadioGroup>
+                </FormControl>
+              )}
+            />
+          </div>
+
+          <div className="flex flex-col gap-6 xl:flex-row">
+            <CustomFormField
+              fieldType={FormFieldType.INPUT}
+              control={form.control}
+              name="address"
+              label="Dirección"
+              placeholder="Av. Italia 1423, Montevideo"
+            />
+
+            <CustomFormField
+              fieldType={FormFieldType.INPUT}
+              control={form.control}
+              name="occupation"
+              label="Ocupación"
+              placeholder="Ingeniero de software"
+            />
+          </div>
+          <div className="flex flex-col gap-6 xl:flex-row">
+            <CustomFormField
+              fieldType={FormFieldType.INPUT}
+              control={form.control}
+              name="emergencyContact"
+              label="Contacto de emergencia"
+              placeholder=""
+            />
+
+            <CustomFormField
+              fieldType={FormFieldType.PHONE_INPUT}
+              control={form.control}
+              name="emergencyContactNumber"
+              label="Teléfono de contacto de emergencia"
+              placeholder="(+34) 123 456 789"
+            />
+          </div>
+        </section>
+
+        <section className="space-y-6">
+          <div className="mb-9 space-y-1">
+            <h2 className="sub-header">Información médica</h2>
+          </div>
+
+          <div className="flex flex-col gap-6 xl:flex-row">
+            <CustomFormField
+              fieldType={FormFieldType.INPUT}
+              control={form.control}
+              name="medicSociety"
+              label="Sociedad médica"
+              placeholder="SMI"
+            />
+
+            <CustomFormField
+              fieldType={FormFieldType.INPUT}
+              control={form.control}
+              name="emergencyService"
+              label="Servicio de emergencia"
+              placeholder="UCM"
+            />
+          </div>
+        </section>
+        <section className="space-y-6">
+          <div className="mb-9 space-y-1">
+            <h2 className="sub-header">Identificación y verificación</h2>
+          </div>
 
           <CustomFormField
-            fieldType={FormFieldType.PHONE_INPUT}
+            fieldType={FormFieldType.SELECT}
             control={form.control}
-            name="phone"
-            label="Teléfono"
-            placeholder="(+34) 123 456 789"
-          />
-        </div>
+            name="identificationType"
+            label="Identification Type"
+            placeholder="Select identification type"
+          >
+            {IdentificationTypes.map((type, i) => (
+              <SelectItem key={type + i} value={type}>
+                {type}
+              </SelectItem>
+            ))}
+          </CustomFormField>
+          
+        </section>
 
-        <div className="flex flex-col gap-6 xl:flex-row">
-          <CustomFormField
-            fieldType={FormFieldType.DATE_PICKER}
-            control={form.control}
-            name="fechaNacimiento"
-            label="Fecha de Nacimiento"
-          />
-
-          <CustomFormField
-            fieldType={FormFieldType.SKELETON}
-            control={form.control}
-            name="genero"
-            label="Género"
-            renderSkeleton={(field) => (
-              <FormControl>
-                <RadioGroup
-                  className="flex h-11 gap-6 xl:justify-between"
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                >
-                  {GenderOptions.map((option) => (
-                    <div key={option} className="radio-group">
-                      <RadioGroupItem value={option} id={option} />
-                      <Label className="cursor-pointer" htmlFor={option}>
-                        {option}
-                      </Label>
-                    </div>
-                  ))}
-                </RadioGroup>
-              </FormControl>
-            )}
-          />
-        </div>
-
-        <div className="flex flex-col gap-6 xl:flex-row"></div>
-        <div className="flex flex-col gap-6 xl:flex-row"></div>
-        <div className="flex flex-col gap-6 xl:flex-row"></div>
-
-        <SubmitButton isLoading={isLoading}> Comenszar </SubmitButton>
+        <SubmitButton isLoading={isLoading}> Comenzar </SubmitButton>
       </form>
     </Form>
   );
