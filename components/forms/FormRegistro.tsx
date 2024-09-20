@@ -237,17 +237,20 @@ export function FormRegistro({ user }: { user: User }) {
           <CustomFormField
             fieldType={FormFieldType.CHECKBOX}
             control={form.control}
-            name="treatmentConsent"
-            label="Estoy de acuerdo con el tratamiento de mis datos personales"
+            name="disclosureConsent"
+            label="I consent to the use and disclosure of my health
+            information for treatment purposes."
           />
+
           <CustomFormField
             fieldType={FormFieldType.CHECKBOX}
             control={form.control}
-            name="treatmentConsent"
-            label="Estoy de acuerdo con el tratamiento de mis datos personales"
+            name="privacyConsent"
+            label="I acknowledge that I have reviewed and agree to the
+            privacy policy"
           />
         </section>
-        <SubmitButton isLoading={isLoading}> Comenzar </SubmitButton>
+        <SubmitButton isLoading={isLoading}> Enviar y continuar </SubmitButton>
       </form>
     </Form>
   );
