@@ -14,6 +14,7 @@ import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { GenderOptions, IdentificationTypes } from "@/constants";
 import { Label } from "../ui/label";
 import { SelectItem } from "../ui/select";
+import FileUploader from "../FileUploader";
 
 export function FormRegistro({ user }: { user: User }) {
   const router = useRouter();
@@ -200,9 +201,52 @@ export function FormRegistro({ user }: { user: User }) {
               </SelectItem>
             ))}
           </CustomFormField>
-          
-        </section>
 
+          <CustomFormField
+            fieldType={FormFieldType.INPUT}
+            control={form.control}
+            name="identificacionNumber"
+            label="Número de identificación"
+            placeholder="1245326-7"
+          />
+
+          <CustomFormField
+            fieldType={FormFieldType.SKELETON}
+            control={form.control}
+            name="identificationDocument"
+            label="Documento de identidad escaneado"
+            renderSkeleton={(field) => (
+              <FormControl>
+                <FileUploader files={field.value} onChange={field.onChange} />
+              </FormControl>
+            )}
+          />
+        </section>
+        <section className="space-y-6">
+          <div className="mb-9 space-y-1">
+            <h2 className="sub-header">Consentimiento y Privacidad</h2>
+          </div>
+
+          <CustomFormField
+            fieldType={FormFieldType.CHECKBOX}
+            control={form.control}
+            name="treatmentConsent"
+            label="Estoy de acuerdo con el tratamiento de mis datos personales"
+          />
+
+          <CustomFormField
+            fieldType={FormFieldType.CHECKBOX}
+            control={form.control}
+            name="treatmentConsent"
+            label="Estoy de acuerdo con el tratamiento de mis datos personales"
+          />
+          <CustomFormField
+            fieldType={FormFieldType.CHECKBOX}
+            control={form.control}
+            name="treatmentConsent"
+            label="Estoy de acuerdo con el tratamiento de mis datos personales"
+          />
+        </section>
         <SubmitButton isLoading={isLoading}> Comenzar </SubmitButton>
       </form>
     </Form>
