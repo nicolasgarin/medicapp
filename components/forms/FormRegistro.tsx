@@ -30,7 +30,6 @@ export function FormRegistro({ user }: { user: User }) {
     },
   });
 
-
   const onSubmit = async (values: z.infer<typeof PatientFormValidation>) => {
     setIsLoading(true);
 
