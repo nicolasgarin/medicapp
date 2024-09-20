@@ -1,6 +1,6 @@
 import { Models } from "node-appwrite";
 
-export interface User extends Models.Document {
+export interface Patient extends Models.Document {
   userId: string;
   name: string;
   email: string;
